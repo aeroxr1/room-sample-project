@@ -3,7 +3,10 @@ package com.testcomponent.room
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import java.io.*
+import java.lang.Exception
 
 /*
     poc with databaseRoomVersion = '2.2.5' with error "Pre-packaged database has an invalid schema"
@@ -16,8 +19,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Thread{
             extractAssetToDatabaseDirectory("dbTest.db")
-            val rows = MyTestDb.getInstance(this.applicationContext).myTestDao().getAllRow()
-            Log.d("MainActivity","found ${rows.size} rows")
+            val query = "SELECT json_extract(Test, '$.code') as code,json_extract(Test, '$.value') as value from MyTestTable"
+            try {
+                val simpleQuery = SimpleSQLiteQuery(query)
+                val rows =
+                    MyTestDb.getInstance(this.applicationContext).myTestDao().getAllRow(simpleQuery)
+                Log.d("MainActivity","found ${rows.size} rows")
+            }catch (e:Exception){
+                Log.e("MainActivity","errore",e)
+            }
+
         }.start()
     }
 

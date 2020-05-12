@@ -7,5 +7,5 @@ import androidx.room.Entity
 data class MyTestTable (  @ColumnInfo(name = "Id") var Id: Int,
                           @ColumnInfo(name = "Params") var Params: String,
                           @ColumnInfo(name = "Rank") var Rank: Int?,
-                          @ColumnInfo(name="Date") var Date: String?
+                          @ColumnInfo(name="Test") var Test: String?
 )

@@ -1,13 +1,16 @@
 package com.testcomponent.room.dao
 
 import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.testcomponent.room.entities.MyTestTable
 
 @Dao
 interface MyTestDao {
 
-    @Query("SELECT * from MyTestTable")
-    fun getAllRow(): Array<MyTestTable>
+    data class Result(val code:Int,val value:String)
+
+    @RawQuery
+    fun getAllRow(query: SupportSQLiteQuery): Array<Result>
 
 }
